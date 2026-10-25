@@ -1,4 +1,4 @@
-from mywhoosh_test import main
+from mywhoosh.cli import main
 
 if __name__ == "__main__":
 	raise SystemExit(main())
