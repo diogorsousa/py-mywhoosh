@@ -1,8 +1,8 @@
-# mywhoosh
+# py-mywhoosh
 
 A lightweight, modular, and dependency-free Python client for the unofficial [MyWhoosh API](https://github.com/mywhoosh-community/mywhoosh-api).
 
-Easily authenticate and retrieve your scheduled workouts from MyWhoosh in your Python scripts and automations.
+Easily authenticate and retrieve your scheduled workouts from MyWhoosh in your Python scripts, automations, and terminal.
 
 ---
 
@@ -13,17 +13,31 @@ Easily authenticate and retrieve your scheduled workouts from MyWhoosh in your P
 - **Convenient Data Models:** Structured `WorkoutTask` dataclass providing clean field access (`date`, `name`, `description`, `tss`, and full raw payload).
 - **Flexible Date Filtering:** Supports Unix timestamps, ISO date strings (`YYYY-MM-DD`), and quick upcoming window queries (`days=7`).
 - **Environment & `.env` Support:** Automatic loading of `.env` files for seamless credential management.
-- **CLI Ready:** Run directly with `python3 -m mywhoosh` or `python3 mywhoosh_test.py`.
+- **CLI & Entrypoint Ready:** Run with `mywhoosh`, `python3 -m mywhoosh`, or `python3 mywhoosh_test.py`.
+- **Fully Typed:** Includes PEP 561 `py.typed` marker for IDEs and type checkers (e.g. Mypy).
 
 ---
 
 ## Installation
 
-Clone the repository:
+### From PyPI
 
 ```bash
-git clone https://github.com/your-username/workouts-script.git
-cd workouts-script
+pip install py-mywhoosh
+```
+
+### From GitHub Source
+
+```bash
+pip install git+https://github.com/diogorsousa/py-mywhoosh.git
+```
+
+### Local Development
+
+```bash
+git clone https://github.com/diogorsousa/py-mywhoosh.git
+cd py-mywhoosh
+pip install -e .
 ```
 
 > **Requirement:** Python 3.10 or higher.
@@ -48,7 +62,7 @@ MYWHOOSH_USERNAME=your-email@example.com
 MYWHOOSH_PASSWORD=your-password
 ```
 
-*(The `.env` file is already listed in `.gitignore` to prevent committing secrets).*
+*(The `.env` file is listed in `.gitignore` to prevent committing secrets).*
 
 ### Option 2: Environment Variables
 
@@ -110,20 +124,21 @@ client = MyWhooshClient(token="eyJhbGciOiJIUzI1NiIs...")
 
 ## CLI Usage
 
-You can run the module directly from the command line:
+When installed, you can run the command-line interface directly with `mywhoosh` or `python3 -m mywhoosh`:
 
 ```bash
-python3 -m mywhoosh
+# Query workouts for upcoming 7 days (loads .env if present)
+mywhoosh
 ```
 
 ### CLI Arguments
 
 ```bash
 # Query a specific date range using ISO dates
-python3 -m mywhoosh --start-date 2026-10-25 --end-date 2026-11-01
+mywhoosh --start-date 2026-10-25 --end-date 2026-11-01
 
 # Query using Unix timestamps
-python3 -m mywhoosh --start-date 1792368000 --end-date 1792972799
+mywhoosh --start-date 1792368000 --end-date 1792972799
 ```
 
 Output:
@@ -142,6 +157,47 @@ Output:
     "TSS": 60
   }
 ]
+```
+
+---
+
+## Running Tests
+
+Run the test suite using standard library `unittest`:
+
+```bash
+python3 -m unittest discover tests
+```
+
+---
+
+## Publishing to PyPI
+
+### Option 1: Automated Release via GitHub Actions (Recommended)
+
+This repository includes a GitHub Actions workflow configured for [PyPI Trusted Publishing](https://docs.pypi.org/trusted-publishers/):
+
+1. On PyPI, add a **Trusted Publisher** for `py-mywhoosh`:
+   - Owner: `diogorsousa`
+   - Repository name: `py-mywhoosh`
+   - Workflow name: `publish.yml`
+2. Create and publish a GitHub Release with a tag (e.g., `v0.1.0`).
+3. GitHub Actions will automatically build and publish the wheel and sdist to PyPI.
+
+### Option 2: Manual Build & Upload
+
+```bash
+# Install packaging tools
+pip install build twine
+
+# Build distribution packages
+python3 -m build
+
+# Check distribution packages
+twine check dist/*
+
+# Upload to PyPI
+twine upload dist/*
 ```
 
 ---
@@ -179,9 +235,9 @@ Output:
 
 ---
 
-## Contributing & References
+## License
 
-- Unofficial API Documentation: [mywhoosh-community/mywhoosh-api](https://github.com/mywhoosh-community/mywhoosh-api)
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
