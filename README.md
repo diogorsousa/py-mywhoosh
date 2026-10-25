@@ -2,7 +2,7 @@
 
 A lightweight, modular, and dependency-free Python client for the unofficial [MyWhoosh API](https://github.com/mywhoosh-community/mywhoosh-api).
 
-Easily authenticate and retrieve your scheduled tasks, workouts, and calendar events from MyWhoosh in your Python scripts and automations.
+Easily authenticate and retrieve your scheduled workouts from MyWhoosh in your Python scripts and automations.
 
 ---
 
